@@ -136,38 +136,99 @@ a:hover {
 }
 
 /* === Header === */
-/* === Header, Theme Toggle === */
 .site-header {
     text-align: center;
     margin-bottom: var(--space-xl);
     padding-top: var(--space-lg);
-    position: relative;
-    /* For absolute positioning of toggle if needed */
 }
 
+/* === Theme Toggle Button (Bottom Floating) === */
 .theme-toggle-btn {
-    position: absolute;
-    top: 24px;
-    right: 0;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    width: 40px;
-    height: 40px;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--accent-gold);
+    border: 2px solid var(--accent-gold);
+    color: var(--bg-card);
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 1.2rem;
-    transition: var(--trans-normal);
-    box-shadow: var(--shadow-input);
+    font-size: 1.5rem;
+    z-index: 999;
+    box-shadow: 0 8px 24px var(--accent-gold-glow),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all var(--trans-normal);
+    animation: floatPop 3s ease-in-out infinite;
 }
 
 .theme-toggle-btn:hover {
-    color: var(--accent-gold);
-    transform: rotate(15deg);
-    background: var(--bg-input);
+    transform: scale(1.15) rotate(15deg);
+    box-shadow: 0 12px 32px var(--accent-gold-glow),
+        0 6px 16px rgba(0, 0, 0, 0.3);
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Floating and popping animation */
+@keyframes floatPop {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    25% {
+        transform: translateY(-8px) scale(1.05);
+    }
+
+    50% {
+        transform: translateY(0) scale(1);
+    }
+
+    75% {
+        transform: translateY(-4px) scale(1.02);
+    }
+}
+
+/* Pulse effect for extra attention */
+.theme-toggle-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    opacity: 0;
+    animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* Icon styling */
+.theme-toggle-btn i {
+    position: relative;
+    z-index: 1;
 }
 
 .logo-container {
