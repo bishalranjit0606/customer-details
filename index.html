@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Mobile Store | Customer Registration</title>
+    <meta name="description" content="Join our exclusive community for the best mobile deals and updates.">
+
+    <!-- Fonts: Outfit for a modern, tech-forward, premium feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons: Phosphor Icons for sharp, clean, consistent SVG icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="site-header">
+            <div class="logo-container">
+
+                <span class="logo-text">LUXE<span class="logo-accent">MOBILE</span></span>
+            </div>
+            <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
+                <i class="ph ph-moon"></i>
+            </button>
+            <p class="header-subtitle">Join Our Exclusive Client List</p>
+        </header>
+
+        <main class="main-content">
+            <div class="form-card fade-in-up">
+                <div class="form-header">
+                    <h1>Welcome</h1>
+                    <p>We'd love to stay connected. Please share your details to receive exclusive offers and premium
+                        support.</p>
+                </div>
+
+                <form id="customerForm" class="premium-form" novalidate>
+                    <!-- Personal Details -->
+                    <div class="form-section">
+                        <div class="input-group">
+                            <label for="fullName">Full Name</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-user input-icon"></i>
+                                <input type="text" id="fullName" name="fullName" placeholder="e.g. Bishal Ranjitkar"
+                                    required autocomplete="name">
+                            </div>
+                            <span class="error-message">Please enter your full name</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="mobileNumber">Mobile Number <span class="required-badge">Required</span></label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-phone input-icon"></i>
+                                <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="98XXXXXXXX"
+                                    required pattern="[0-9]{10}" autocomplete="tel">
+                            </div>
+                            <span class="helper-text">We'll only use this for important updates.</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Email Address <span class="optional-badge">Optional</span></label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-envelope input-icon"></i>
+                                <input type="email" id="email" name="email" placeholder="you@example.com"
+                                    autocomplete="email">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Birthday Section -->
+                    <div class="form-section birthday-section">
+                        <h2 class="section-title">Date of Birth <span class="required-star">*</span></h2>
+                        <p class="section-desc">We want to wish you on your special day!</p>
+
+                        <!-- Date Mode Toggle -->
+                        <div class="date-toggle-container">
+                            <div class="date-toggle">
+                                <input type="radio" id="modeBS" name="dateMode" value="BS" checked>
+                                <label for="modeBS" class="toggle-option">Nepali Date (BS)</label>
+
+                                <input type="radio" id="modeAD" name="dateMode" value="AD">
+                                <label for="modeAD" class="toggle-option">English Date (AD)</label>
+
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <!-- Unified Date Input -->
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="ph ph-calendar input-icon"></i>
+                                <input type="text" id="displayDate" placeholder="Select Date" readonly
+                                    class="date-display-input">
+                                <i class="ph ph-caret-down input-arrow"></i>
+                            </div>
+                            <!-- Hidden input for final AD submission -->
+                            <input type="hidden" id="dobFinalAD" name="dobFinalAD" required>
+                        </div>
+                    </div>
+
+                    <!-- Interests Section -->
+                    <div class="form-section interests-section">
+                        <h2 class="section-title">Your Interests</h2>
+                        <div class="checkbox-grid">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="interests" value="newMobile">
+                                <span class="checkbox-box"><i class="ph-bold ph-check"></i></span>
+                                <span class="checkbox-label">New Mobiles</span>
+                            </label>
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="interests" value="accessories">
+                                <span class="checkbox-box"><i class="ph-bold ph-check"></i></span>
+                                <span class="checkbox-label">Premium Accessories</span>
+                            </label>
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="interests" value="wholesale">
+                                <span class="checkbox-box"><i class="ph-bold ph-check"></i></span>
+                                <span class="checkbox-label">Wholesale Deals</span>
+                            </label>
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="interests" value="repair">
+                                <span class="checkbox-box"><i class="ph-bold ph-check"></i></span>
+                                <span class="checkbox-label">Repair Services</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Consent -->
+                    <div class="form-section consent-section">
+                        <label class="custom-toggle">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <span class="toggle-track"></span>
+                            <span class="toggle-text">I agree to receive relevant offers and updates. <a href="#"
+                                    class="link">Privacy Policy</a></span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Register Now</span>
+                        <div class="btn-shine"></div>
+                    </button>
+
+                    <p class="trust-message">
+                        Your data is encrypted and 100% secure.
+                    </p>
+                </form>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 LuxeMobile. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Custom Date Picker Modal -->
+    <div id="datePickerModal" class="datepicker-modal">
+        <div class="datepicker-content">
+            <div class="datepicker-header">
+                <h3>Select Nepali Date</h3>
+                <button type="button" class="close-picker">&times;</button>
+            </div>
+            <div class="datepicker-body">
+                <div class="picker-column">
+                    <div class="picker-label">Year</div>
+                    <div class="picker-scroll" id="npYearList">
+                        <!-- Years populated by JS -->
+                    </div>
+                </div>
+                <div class="picker-column">
+                    <div class="picker-label">Month</div>
+                    <div class="picker-scroll" id="npMonthList">
+                        <!-- Months populated by JS -->
+                    </div>
+                </div>
+                <div class="picker-column">
+                    <div class="picker-label">Day</div>
+                    <div class="picker-scroll" id="npDayList">
+                        <!-- Days populated by JS -->
+                    </div>
+                </div>
+            </div>
+            <div class="datepicker-footer">
+                <button type="button" id="confirmDateBtn" class="confirm-btn">Confirm Date</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nepali Date Converter Script -->
+    <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

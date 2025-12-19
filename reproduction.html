@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reproduction</title>
+    <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.js"></script>
+</head>
+
+<body>
+    <div id="output"></div>
+    <script>
+        window.onerror = function (msg, url, line) {
+            document.getElementById('output').innerText += "Error: " + msg + "\n";
+        };
+
+        window.onload = function () {
+            try {
+                document.getElementById('output').innerText += `Typeof NepaliDate: ${typeof NepaliDate}\n`;
+                if (typeof NepaliDate !== 'undefined') {
+                    document.getElementById('output').innerText += `Keys: ${Object.keys(NepaliDate).join(', ')}\n`;
+                    if (NepaliDate.default) {
+                        document.getElementById('output').innerText += `Has default export\n`;
+                    }
+                }
+
+                const NP = NepaliDate.default || NepaliDate;
+
+                const y = 2059;
+                const m = 1; // Jestha
+                const d = 23;
+
+                document.getElementById('output').innerText += `Attempting with correctly resolved class...\n`;
+
+                const npDate = new NP(y, m, d);
+
+                document.getElementById('output').innerText += `Object created. valueOf: ${npDate.valueOf()}\n`;
+
+                const jsDate = new Date(npDate.valueOf());
+                document.getElementById('output').innerText += `JS Date: ${jsDate.toString()}\n`;
+
+            } catch (e) {
+                document.getElementById('output').innerText += "Exception: " + e.message + "\n";
+            }
+        };
+    </script>
+</body>
+
+</html>
