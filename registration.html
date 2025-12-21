@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration | LuxeMobile</title>
+    <meta name="description" content="Register with LuxeMobile for warranties, offers, and wholesale partnerships.">
+
+    <!-- Fonts: Outfit for a modern, tech-forward, premium feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons: Phosphor Icons for sharp, clean, consistent SVG icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="shared/styles.css">
+
+    <style>
+        /* Toggle Switch Styles */
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .toggle-switch {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 4px;
+            display: flex;
+            position: relative;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .type-toggle-option {
+            padding: 8px 24px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-muted);
+            z-index: 1;
+            transition: color 0.3s ease;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .type-toggle-option.active {
+            color: white;
+        }
+
+        .type-toggle-slider {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            height: calc(100% - 8px);
+            width: 50%;
+            background: var(--primary);
+            border-radius: 999px;
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            z-index: 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Wholesale Theme Overrides */
+        body.wholesale-mode {
+            --primary: #dc2626;
+            --primary-hover: #ef4444;
+            --accent-gold: #dc2626;
+        }
+
+        body.retail-mode {
+            --primary: #2563eb;
+            --primary-hover: #3b82f6;
+            --accent-gold: #2563eb;
+        }
+
+        /* Section Visibility */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="retail-mode">
+    <div class="page-wrapper">
+        <header class="site-header">
+            <div class="logo-container">
+                <span class="logo-text">LUXE<span class="logo-accent">MOBILE</span></span>
+            </div>
+            <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
+                <i class="ph ph-moon"></i>
+            </button>
+            <p class="header-subtitle"><span id="header-subtitle-text">Register Your Purchase</span></p>
+        </header>
+
+        <main class="main-content">
+            <div class="form-card fade-in-up">
+
+                <!-- Toggle Switch -->
+                <div class="toggle-container">
+                    <div class="toggle-switch" id="typeToggle">
+                        <div class="type-toggle-option active" data-type="retail">General</div>
+                        <div class="type-toggle-option" data-type="wholesale">Wholesale</div>
+                        <div class="type-toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="form-header">
+                    <h1 id="form-title">Product Registration</h1>
+                    <p id="form-desc">Register your purchase to activate warranty and receive premium customer support.
+                    </p>
+                </div>
+
+                <form id="customerForm" class="premium-form" novalidate>
+                    <!-- Hidden field for customer type -->
+                    <input type="hidden" name="customer_type" id="customerType" value="retail">
+
+                    <!-- Personal Details (Shared) -->
+                    <div class="form-section">
+                        <div class="input-group">
+                            <label for="fullName">Full Name</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-user input-icon"></i>
+                                <input type="text" id="fullName" name="fullName" placeholder="e.g. Bishal Ranjitkar"
+                                    required autocomplete="name">
+                            </div>
+                            <span class="error-message">Please enter your full name</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="mobileNumber">Mobile Number <span class="required-badge">Required</span></label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-phone input-icon"></i>
+                                <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="98XXXXXXXX"
+                                    required pattern="[0-9]{10}" autocomplete="tel">
+                            </div>
+                            <span class="helper-text">We'll only use this for important updates.</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Email Address <span class="optional-badge">Optional</span></label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-envelope input-icon"></i>
+                                <input type="email" id="email" name="email" placeholder="you@example.com"
+                                    autocomplete="email">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Birthday Section (Shared) -->
+                    <div class="form-section birthday-section">
+                        <h2 class="section-title">Date of Birth <span class="required-star">*</span></h2>
+                        <p class="section-desc">We want to wish you on your special day!</p>
+
+                        <!-- Date Mode Toggle -->
+                        <div class="date-toggle-container">
+                            <div class="date-toggle">
+                                <input type="radio" id="modeBS" name="dateMode" value="BS" checked>
+                                <label for="modeBS" class="toggle-option">Nepali Date (BS)</label>
+
+                                <input type="radio" id="modeAD" name="dateMode" value="AD">
+                                <label for="modeAD" class="toggle-option">English Date (AD)</label>
+
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <!-- Unified Date Input -->
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="ph ph-calendar input-icon"></i>
+                                <input type="text" id="displayDate" placeholder="Select Date" readonly
+                                    class="date-display-input">
+                                <i class="ph ph-caret-down input-arrow"></i>
+                            </div>
+                            <!-- Hidden input for final AD submission -->
+                            <input type="hidden" id="dobFinalAD" name="dobFinalAD" required>
+                        </div>
+                    </div>
+
+                    <!-- Retail Specific Section -->
+                    <div id="section-retail" class="form-section">
+                        <h2 class="section-title">Purchase Details <span class="required-star">*</span></h2>
+                        <p class="section-desc">Help us serve you better with your product information</p>
+
+                        <div class="input-group">
+                            <label for="productPurchased">Product Purchased</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-device-mobile input-icon"></i>
+                                <input type="text" id="productPurchased" name="productPurchased"
+                                    placeholder="e.g. iPhone 15 Pro" required>
+                            </div>
+                            <span class="error-message">Please enter the product name</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="purchaseDate">Purchase Date</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-calendar-check input-icon"></i>
+                                <input type="date" id="purchaseDate" name="purchaseDate" required>
+                            </div>
+                            <span class="error-message">Please select purchase date</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Warranty Period</label>
+                            <div class="input-wrapper composite-wrapper" style="display: flex; gap: 10px;">
+                                <div style="flex: 1;">
+                                    <input type="number" id="warrantyValue" placeholder="Duration" min="1" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <select id="warrantyUnit" required>
+                                        <option value="days">Days</option>
+                                        <option value="weeks">Weeks</option>
+                                        <option value="months" selected>Months</option>
+                                        <option value="years">Years</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <span class="error-message">Please enter warranty duration</span>
+                        </div>
+                    </div>
+
+                    <!-- Wholesale Specific Section -->
+                    <div id="section-wholesale" class="form-section hidden">
+                        <h2 class="section-title">Business Details <span class="required-star">*</span></h2>
+                        <p class="section-desc">Tell us about your business to provide tailored support</p>
+
+                        <div class="input-group">
+                            <label for="businessName">Business / Shop Name</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-storefront input-icon"></i>
+                                <input type="text" id="businessName" name="businessName"
+                                    placeholder="e.g. Tech Hub Electronics">
+                            </div>
+                            <span class="error-message">Please enter your business name</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="brandsInterested">Brands Interested</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-tag input-icon"></i>
+                                <input type="text" id="brandsInterested" name="brandsInterested"
+                                    placeholder="e.g. Apple, Samsung, Xiaomi">
+                            </div>
+                            <span class="helper-text">Separate multiple brands with commas</span>
+                            <span class="error-message">Please enter brands you're interested in</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="monthlyQuantity">Average Monthly Quantity</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-package input-icon"></i>
+                                <select id="monthlyQuantity" name="monthlyQuantity">
+                                    <option value="">Select quantity range</option>
+                                    <option value="10-50">10-50 units</option>
+                                    <option value="51-100">51-100 units</option>
+                                    <option value="101-500">101-500 units</option>
+                                    <option value="500+">500+ units</option>
+                                </select>
+                            </div>
+                            <span class="error-message">Please select monthly quantity</span>
+                        </div>
+                    </div>
+
+                    <!-- Interests Section (Shared) -->
+                    <div class="form-section interests-section">
+                        <h2 class="section-title">Your Interests</h2>
+                        <div class="checkbox-grid">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="interests" value="newMobile">
+                                <span class="checkbox-box"><i class="ph-bold ph-check"></i></span>
+                                <span class="checkbox-label">New Mobiles</span>
+                            </label>
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="interests" value="accessories">
+                                <span class="checkbox-box"><i class="ph-bold ph-check"></i></span>
+                                <span class="checkbox-label">Premium Accessories</span>
+                            </label>
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="interests" value="wholesale">
+                                <span class="checkbox-box"><i class="ph-bold ph-check"></i></span>
+                                <span class="checkbox-label">Wholesale Deals</span>
+                            </label>
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="interests" value="repair">
+                                <span class="checkbox-box"><i class="ph-bold ph-check"></i></span>
+                                <span class="checkbox-label">Repair Services</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Consent -->
+                    <div class="form-section consent-section">
+                        <label class="custom-toggle">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <span class="toggle-track"></span>
+                            <span class="toggle-text">I agree to receive relevant offers and updates. <a href="#"
+                                    class="link">Privacy Policy</a></span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Complete Registration</span>
+                        <div class="btn-shine"></div>
+                    </button>
+
+                    <p class="trust-message">
+                        Your data is encrypted and 100% secure.
+                    </p>
+                </form>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 LuxeMobile. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Custom Date Picker Modal -->
+    <div id="datePickerModal" class="datepicker-modal">
+        <div class="datepicker-content">
+            <div class="datepicker-header">
+                <h3>Select Nepali Date</h3>
+                <button type="button" class="close-picker">&times;</button>
+            </div>
+            <div class="datepicker-body">
+                <div class="picker-column">
+                    <div class="picker-label">Year</div>
+                    <div class="picker-scroll" id="npYearList">
+                        <!-- Years populated by JS -->
+                    </div>
+                </div>
+                <div class="picker-column">
+                    <div class="picker-label">Month</div>
+                    <div class="picker-scroll" id="npMonthList">
+                        <!-- Months populated by JS -->
+                    </div>
+                </div>
+                <div class="picker-column">
+                    <div class="picker-label">Day</div>
+                    <div class="picker-scroll" id="npDayList">
+                        <!-- Days populated by JS -->
+                    </div>
+                </div>
+            </div>
+            <div class="datepicker-footer">
+                <button type="button" id="confirmDateBtn" class="confirm-btn">Confirm Date</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nepali Date Converter Script -->
+    <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.js"></script>
+
+    <!-- Shared Scripts -->
+    <script src="shared/utils.js"></script>
+    <script src="shared/validation.js"></script>
+    <script src="shared/datepicker.js"></script>
+    <script src="shared/api.js"></script>
+
+    <!-- Page Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scriptURL = "https://script.google.com/macros/s/AKfycbx1b-dQyxmgnbGDoJC-domJMvWSSMYFqShBtCLylfwi3tTMtLQqgnJUAVyGuxKEKvEKug/exec";
+
+            initThemeToggle();
+            initInputSanitization();
+            initDatePicker();
+            initFormSubmission(scriptURL, 'LuxeMobile');
+
+            // Toggle Logic
+            const toggleOptions = document.querySelectorAll('.type-toggle-option');
+            const toggleSlider = document.querySelector('.type-toggle-slider');
+            const retailSection = document.getElementById('section-retail');
+            const wholesaleSection = document.getElementById('section-wholesale');
+            const customerTypeInput = document.getElementById('customerType');
+            const body = document.body;
+
+            // Text Elements
+            const title = document.getElementById('form-title');
+            const desc = document.getElementById('form-desc');
+            const subTitle = document.getElementById('header-subtitle-text');
+
+            // Fields to toggle 'required'
+            const retailRequiredIds = ['productPurchased', 'purchaseDate', 'warrantyValue', 'warrantyUnit'];
+            const wholesaleRequiredIds = ['businessName', 'brandsInterested', 'monthlyQuantity'];
+
+            toggleOptions.forEach((option, index) => {
+                option.addEventListener('click', () => {
+                    // Update Toggle UI
+                    toggleOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+
+                    // Move Slider
+                    if (index === 0) {
+                        toggleSlider.style.transform = 'translateX(0)';
+                        switchToRetail();
+                    } else {
+                        toggleSlider.style.transform = 'translateX(100%)';
+                        switchToWholesale();
+                    }
+                });
+            });
+
+            function switchToRetail() {
+                // Visibility
+                retailSection.classList.remove('hidden');
+                wholesaleSection.classList.add('hidden');
+
+                // Theme
+                body.classList.remove('wholesale-mode');
+                body.classList.add('retail-mode');
+
+                // Data
+                customerTypeInput.value = 'retail';
+                title.innerText = 'Product Registration';
+                desc.innerText = 'Register your purchase to activate warranty and receive premium customer support.';
+                subTitle.innerText = 'Register Your Purchase';
+
+                // Validation
+                setRequired(retailRequiredIds, true);
+                setRequired(wholesaleRequiredIds, false);
+            }
+
+            function switchToWholesale() {
+                // Visibility
+                retailSection.classList.add('hidden');
+                wholesaleSection.classList.remove('hidden');
+
+                // Theme
+                body.classList.remove('retail-mode');
+                body.classList.add('wholesale-mode');
+
+                // Data
+                customerTypeInput.value = 'wholesale';
+                title.innerText = 'Wholesale Partnership';
+                desc.innerText = 'Register your business to access exclusive bulk pricing and dedicated business support.';
+                subTitle.innerText = 'Join Our Wholesale Network';
+
+                // Validation
+                setRequired(retailRequiredIds, false);
+                setRequired(wholesaleRequiredIds, true);
+            }
+
+            function setRequired(ids, isRequired) {
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        if (isRequired) {
+                            el.setAttribute('required', 'true');
+                        } else {
+                            el.removeAttribute('required');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

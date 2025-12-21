@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Mobile Store | Customer Registration</title>
+    <title>Customer Offers & Updates Registration | LuxeMobile</title>
     <meta name="description" content="Join our exclusive community for the best mobile deals and updates.">
 
     <!-- Fonts: Outfit for a modern, tech-forward, premium feel -->
@@ -15,15 +15,14 @@
     <!-- Icons: Phosphor Icons for sharp, clean, consistent SVG icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="shared/styles.css">
 </head>
 
 <body>
     <div class="page-wrapper">
         <header class="site-header">
             <div class="logo-container">
-
                 <span class="logo-text">LUXE<span class="logo-accent">MOBILE</span></span>
             </div>
             <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
@@ -41,6 +40,9 @@
                 </div>
 
                 <form id="customerForm" class="premium-form" novalidate>
+                    <!-- Hidden field for customer type -->
+                    <input type="hidden" name="customer_type" value="offer">
+
                     <!-- Personal Details -->
                     <div class="form-section">
                         <div class="input-group">
@@ -196,7 +198,24 @@
 
     <!-- Nepali Date Converter Script -->
     <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.js"></script>
-    <script src="script.js"></script>
+
+    <!-- Shared Scripts -->
+    <script src="shared/utils.js"></script>
+    <script src="shared/validation.js"></script>
+    <script src="shared/datepicker.js"></script>
+    <script src="shared/api.js"></script>
+
+    <!-- Initialize -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scriptURL = "https://script.google.com/macros/s/AKfycbx1b-dQyxmgnbGDoJC-domJMvWSSMYFqShBtCLylfwi3tTMtLQqgnJUAVyGuxKEKvEKug/exec";
+
+            initThemeToggle();
+            initInputSanitization();
+            initDatePicker();
+            initFormSubmission(scriptURL, 'LuxeMobile');
+        });
+    </script>
 </body>
 
 </html>

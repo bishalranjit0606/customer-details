@@ -1,0 +1,420 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "fromEmail": "bishalranjit2002@gmail.com",
+                "toEmail": "bishalranjit2002@gmail.com",
+                "subject": "Daily CRM Workflow Report",
+                "emailFormat": "html",
+                "html": "=<div style=\"font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;\">\n  <h2 style=\"color: #333; border-bottom: 2px solid #333; padding-bottom: 10px;\">Daily CRM Activity Report</h2>\n  <p style=\"color: #666;\">Here is the summary of the automated emails sent today {{ $today }}:</p>\n  {{ $json[\"htmlReport\"] }}\n  <p style=\"margin-top: 30px; font-size: 12px; color: #999;\">High-Performance CRM Automation v1.0</p>\n</div>",
+                "options": {}
+            },
+            "id": "fc0fb06d-82e2-4053-bc9f-a6f2c4b3f458",
+            "name": "Email: Admin Report",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2,
+            "position": [
+                2864,
+                3808
+            ],
+            "webhookId": "c2d8b613-92e2-4dbf-b7b4-ba5b1a0d3cc4",
+            "credentials": {
+                "smtp": {
+                    "id": "OApee9KyGUzFO9zD",
+                    "name": "SMTP account 4"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "// Admin Reporting Aggregation\nconst items = $input.all();\nconst sentList = [];\n\nfor (const item of items) {\n  const event = item.json['EventTrigger'];\n  if (event) {\n    sentList.push({\n      name: item.json['Full Name'] || 'Customer',\n      type: item.json['NormalizedType'],\n      email: item.json['NormalizedEmail'],\n      mobile: item.json['Mobile Number'] || 'N/A',\n      event: event\n    });\n  }\n}\n\nlet htmlReport = '';\nif (sentList.length === 0) {\n  htmlReport = '<div style=\"padding: 20px; background-color: #ffebee; color: #c62828; border-radius: 5px; text-align: center;\"><strong>No emails were sent today.</strong></div>';\n} else {\n  htmlReport = '<table border=\"1\" cellpadding=\"10\" cellspacing=\"0\" style=\"border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; border: 1px solid #ddd;\">';\n  htmlReport += '<tr style=\"background-color: #f2f2f2; color: #333;\"><th>Name</th><th>Type</th><th>Email</th><th>Mobile</th><th>Event</th></tr>';\n  for (const p of sentList) {\n    htmlReport += `<tr><td>${p.name}</td><td>${p.type}</td><td>${p.email}</td><td>${p.mobile}</td><td><span style=\"background-color: #e3f2fd; color: #1565c0; padding: 2px 8px; border-radius: 10px; font-size: 0.9em;\">${p.event}</span></td></tr>`;\n  }\n  htmlReport += '</table>';\n}\n\nreturn [{\n  json: {\n    totalSent: sentList.length,\n    htmlReport: htmlReport\n  }\n}];"
+            },
+            "id": "be6afa03-ff57-4d4c-96dc-5550c358cb39",
+            "name": "Calc Admin Stats",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2656,
+                3808
+            ]
+        },
+        {
+            "parameters": {
+                "fromEmail": "bishalranjit2002@gmail.com",
+                "toEmail": "={{ $json[\"NormalizedEmail\"] }}",
+                "subject": "Warranty Exiring Soon",
+                "emailFormat": "html",
+                "html": "=<div style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;\">\n  <div style=\"padding: 40px 30px; text-align: center; background-color: #f8f9fa;\">\n    <h1 style=\"color: #333; margin: 0; font-size: 24px; letter-spacing: 1px;\">LuxeMobile</h1>\n  </div>\n  <div style=\"padding: 40px 30px; color: #333333; line-height: 1.6;\">\n    <h2 style=\"color: #d32f2f; margin-top: 0;\">Warranty Expiration Notice</h2>\n    <p>Hi {{ $json[\"Full Name\"] }},</p>\n    <p>Is your device still running smoothly? We wanted to remind you that your warranty for <strong>{{ $json[\"Product Purchased\"] }}</strong> is set to expire soon.</p>\n    <p>If you are experiencing any issues, please contact us before the warranty period ends.</p>\n    <p>Best regards,<br>The LuxeMobile Team</p>\n  </div>\n  <div style=\"background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; border-top: 1px solid #eee;\">\n    <p style=\"margin-bottom: 10px; color: #666;\">Connect with us:</p>\n    <a href=\"https://facebook.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #3b5998;\">Facebook</a>\n    <a href=\"https://instagram.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #E1306C;\">Instagram</a>\n    <a href=\"https://tiktok.com/@luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #000000;\">TikTok</a>\n    <a href=\"https://luxemobile.com\" style=\"text-decoration: none; margin: 0 10px; color: #333;\">Website</a>\n  </div>\n</div>",
+                "options": {}
+            },
+            "id": "59966d59-2b2a-41b3-ade6-101aef27a6d2",
+            "name": "Email: Warranty",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2,
+            "position": [
+                2864,
+                3648
+            ],
+            "webhookId": "a90641ec-7de2-43f9-bea7-9adece0325ed",
+            "credentials": {
+                "smtp": {
+                    "id": "OApee9KyGUzFO9zD",
+                    "name": "SMTP account 4"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "fromEmail": "bishalranjit2002@gmail.com",
+                "toEmail": "={{ $json[\"NormalizedEmail\"] }}",
+                "subject": "Thank you for shopping with LuxeMobile",
+                "emailFormat": "html",
+                "html": "=<div style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;\">\n  <div style=\"padding: 40px 30px; text-align: center; background-color: #f8f9fa;\">\n    <h1 style=\"color: #333; margin: 0; font-size: 24px; letter-spacing: 1px;\">LuxeMobile</h1>\n  </div>\n  <div style=\"padding: 40px 30px; color: #333333; line-height: 1.6;\">\n    <h2 style=\"color: #333; margin-top: 0;\">Thank You for Your Order</h2>\n    <p>Hi {{ $json[\"Full Name\"] }},</p>\n    <p>We appreciate your recent purchase of <strong>{{ $json[\"Product Purchased\"] }}</strong>.</p>\n    <p>Your warranty covers: {{ $json[\"Warranty Period\"] }}.</p>\n    <p>We hope you enjoy your new product!</p>\n    <p>Best regards,<br>The LuxeMobile Team</p>\n  </div>\n  <div style=\"background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; border-top: 1px solid #eee;\">\n    <p style=\"margin-bottom: 10px; color: #666;\">Connect with us:</p>\n    <a href=\"https://facebook.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #3b5998;\">Facebook</a>\n    <a href=\"https://instagram.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #E1306C;\">Instagram</a>\n    <a href=\"https://tiktok.com/@luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #000000;\">TikTok</a>\n    <a href=\"https://luxemobile.com\" style=\"text-decoration: none; margin: 0 10px; color: #333;\">Website</a>\n  </div>\n</div>",
+                "options": {}
+            },
+            "id": "eb1c5023-223d-4bec-a519-a2d7168e7652",
+            "name": "Email: Purchase TY",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2,
+            "position": [
+                2864,
+                3488
+            ],
+            "webhookId": "68fd8498-3a34-4831-a72c-525257557600",
+            "credentials": {
+                "smtp": {
+                    "id": "OApee9KyGUzFO9zD",
+                    "name": "SMTP account 4"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "fromEmail": "bishalranjit2002@gmail.com",
+                "toEmail": "={{ $json[\"NormalizedEmail\"] }}",
+                "subject": "Best Wishes on Your Birthday",
+                "emailFormat": "html",
+                "html": "=<div style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;\">\n  <div style=\"padding: 40px 30px; text-align: center; background-color: #f8f9fa;\">\n    <h1 style=\"color: #333; margin: 0; font-size: 24px; letter-spacing: 1px;\">LuxeMobile</h1>\n  </div>\n  <div style=\"padding: 40px 30px; color: #333333; line-height: 1.6;\">\n    <h2 style=\"color: #333; margin-top: 0;\">Happy Birthday, {{ $json[\"Full Name\"] }}!</h2>\n    <p>We hope your day is filled with joy, laughter, and celebration.</p>\n    <p>Thank you for being part of our community. We look forward to serving you.</p>\n    <p>Best regards,<br>The LuxeMobile Team</p>\n  </div>\n  <div style=\"background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; border-top: 1px solid #eee;\">\n    <p style=\"margin-bottom: 10px; color: #666;\">Connect with us:</p>\n    <a href=\"https://facebook.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #3b5998;\">Facebook</a>\n    <a href=\"https://instagram.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #E1306C;\">Instagram</a>\n    <a href=\"https://tiktok.com/@luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #000000;\">TikTok</a>\n    <a href=\"https://luxemobile.com\" style=\"text-decoration: none; margin: 0 10px; color: #333;\">Website</a>\n  </div>\n</div>",
+                "options": {}
+            },
+            "id": "69da149c-284f-4b6c-bea2-e62f3eb1a9a4",
+            "name": "Email: Bday Offer",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2,
+            "position": [
+                3056,
+                3472
+            ],
+            "webhookId": "940aac9b-fc18-4eb8-a388-a4764c55d447",
+            "credentials": {
+                "smtp": {
+                    "id": "OApee9KyGUzFO9zD",
+                    "name": "SMTP account 4"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "fromEmail": "bishalranjit2002@gmail.com",
+                "toEmail": "={{ $json[\"NormalizedEmail\"] }}",
+                "subject": "Happy Birthday! Here is your gift ",
+                "emailFormat": "html",
+                "html": "=<div style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;\">\n  <div style=\"padding: 40px 30px; text-align: center; background-color: #f8f9fa;\">\n    <h1 style=\"color: #333; margin: 0; font-size: 24px; letter-spacing: 1px;\">LuxeMobile</h1>\n  </div>\n  <div style=\"padding: 40px 30px; color: #333333; line-height: 1.6;\">\n    <h2 style=\"color: #333; margin-top: 0;\">Happy Birthday, {{ $json[\"Full Name\"] }}!</h2>\n    <p>On behalf of the entire team, we wish you a wonderful birthday.</p>\n    <p>We truly appreciate you choosing to shop with us. To say thank you, please enjoy a special discount on your next purchase.</p>\n    <p><strong>Thank you for purchasing!</strong></p>\n    <p>Warm regards,<br>The LuxeMobile Team</p>\n  </div>\n  <div style=\"background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; border-top: 1px solid #eee;\">\n    <p style=\"margin-bottom: 10px; color: #666;\">Connect with us:</p>\n    <a href=\"https://facebook.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #3b5998;\">Facebook</a>\n    <a href=\"https://instagram.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #E1306C;\">Instagram</a>\n    <a href=\"https://tiktok.com/@luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #000000;\">TikTok</a>\n    <a href=\"https://luxemobile.com\" style=\"text-decoration: none; margin: 0 10px; color: #333;\">Website</a>\n  </div>\n</div>",
+                "options": {}
+            },
+            "id": "98dbc482-aad3-4aea-8007-a2aeb895d3f5",
+            "name": "Email: Bday Retail",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2,
+            "position": [
+                3056,
+                3280
+            ],
+            "webhookId": "3b47e191-9606-496c-8ead-b4609e69bf82",
+            "credentials": {
+                "smtp": {
+                    "id": "OApee9KyGUzFO9zD",
+                    "name": "SMTP account 4"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "fromEmail": "bishalranjit2002@gmail.com",
+                "toEmail": "={{ $json[\"NormalizedEmail\"] }}",
+                "subject": "Happy Birthday Partner! - LuxeMobile Wholesale",
+                "emailFormat": "html",
+                "html": "=<div style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;\">\n  <div style=\"padding: 40px 30px; text-align: center; background-color: #f8f9fa;\">\n    <h1 style=\"color: #333; margin: 0; font-size: 24px; letter-spacing: 1px;\">LuxeMobile</h1>\n  </div>\n  <div style=\"padding: 40px 30px; color: #333333; line-height: 1.6;\">\n    <h2 style=\"color: #333; margin-top: 0;\">Happy Birthday, {{ $json[\"Full Name\"] }}!</h2>\n    <p>We wish you a successful year ahead filled with growth and prosperity.</p>\n    <p>Thank you for being a valued partner.</p>\n    <p>Sincerely,<br>The LuxeMobile Team</p>\n  </div>\n  <div style=\"background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; border-top: 1px solid #eee;\">\n    <p style=\"margin-bottom: 10px; color: #666;\">Connect with us:</p>\n    <a href=\"https://facebook.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #3b5998;\">Facebook</a>\n    <a href=\"https://instagram.com/luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #E1306C;\">Instagram</a>\n    <a href=\"https://tiktok.com/@luxemobile\" style=\"text-decoration: none; margin: 0 10px; color: #000000;\">TikTok</a>\n    <a href=\"https://luxemobile.com\" style=\"text-decoration: none; margin: 0 10px; color: #333;\">Website</a>\n  </div>\n</div>",
+                "options": {}
+            },
+            "id": "1cf31496-b60e-4af4-8f74-713ccf3389e7",
+            "name": "Email: Bday Wholesale",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2,
+            "position": [
+                3056,
+                3120
+            ],
+            "webhookId": "b0223b7f-78dc-4550-81d0-f9c70283884d",
+            "credentials": {
+                "smtp": {
+                    "id": "OApee9KyGUzFO9zD",
+                    "name": "SMTP account 4"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "dataType": "string",
+                "value1": "={{ $json[\"NormalizedType\"] }}",
+                "rules": {
+                    "rules": [
+                        {
+                            "value2": "wholesale"
+                        },
+                        {
+                            "value2": "retail",
+                            "output": 1
+                        },
+                        {
+                            "value2": "offer",
+                            "output": 2
+                        }
+                    ]
+                }
+            },
+            "id": "f262cf3f-9dee-4e76-9aba-09f0143c9634",
+            "name": "Birthday Segment",
+            "type": "n8n-nodes-base.switch",
+            "typeVersion": 1,
+            "position": [
+                2768,
+                3232
+            ]
+        },
+        {
+            "parameters": {
+                "dataType": "string",
+                "value1": "={{ $json[\"EventTrigger\"] }}",
+                "rules": {
+                    "rules": [
+                        {
+                            "value2": "birthday"
+                        },
+                        {
+                            "value2": "purchase_thank_you",
+                            "output": 1
+                        },
+                        {
+                            "value2": "warranty_reminder",
+                            "output": 2
+                        }
+                    ]
+                }
+            },
+            "id": "6772516c-1322-4b23-a123-359d077a344e",
+            "name": "Route Events",
+            "type": "n8n-nodes-base.switch",
+            "typeVersion": 1,
+            "position": [
+                2656,
+                3504
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Time & Event Logic\nconst items = $input.all();\nconst results = [];\n\n// Get today's date details\nconst today = new Date();\nconst currentDay = today.getDate();\nconst currentMonth = today.getMonth() + 1; // JS months are 0-indexed\nconst todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD\n\n// Iterate and flag events\nfor (const item of items) {\n  const json = item.json;\n  const type = json['NormalizedType'];\n  const eventsFound = [];\n  \n  // 1. Birthday Check\n  if (json['Date of Birth (AD)']) {\n    const dob = new Date(json['Date of Birth (AD)']);\n    if (dob.getDate() === currentDay && (dob.getMonth() + 1) === currentMonth) {\n      eventsFound.push('birthday');\n    }\n  }\n  \n  // 2. Purchase Thank You Check (Retail Only, Yesterday)\n  if (type === 'retail' && json['Purchase Date']) {\n     const purchaseDate = new Date(json['Purchase Date']);\n     \n     const yesterday = new Date(today);\n     yesterday.setDate(yesterday.getDate() - 1);\n     const yesterdayStr = yesterday.toISOString().split('T')[0];\n     const pDateStr = purchaseDate.toISOString().split('T')[0];\n     \n     if (pDateStr === yesterdayStr) {\n       eventsFound.push('purchase_thank_you');\n     }\n  }\n  \n  // 3. Warranty Reminder (Retail Only)\n  if (type === 'retail' && json['Purchase Date'] && json['Warranty Period']) {\n    const pDate = new Date(json['Purchase Date']);\n    const warrantyStr = (json['Warranty Period'] || '').toLowerCase();\n    \n    // Parse Duration & Unit\n    const parts = warrantyStr.split(' ');\n    const duration = parseInt(parts[0]);\n    const unit = (parts[1] || '').trim();\n    \n    let daysToAdd = 0;\n    let triggerDaysBefore = 30; // default\n    \n    if (!isNaN(duration)) {\n      if (unit.startsWith('year')) {\n        daysToAdd = duration * 365;\n        triggerDaysBefore = 30; // 1 month before\n      } else if (unit.startsWith('month')) {\n        daysToAdd = duration * 30;\n        triggerDaysBefore = 5; // 5 days before\n      } else if (unit.startsWith('week')) {\n        daysToAdd = duration * 7;\n        triggerDaysBefore = 1; // 1 day before\n      } else if (unit.startsWith('day')) {\n        daysToAdd = duration;\n        triggerDaysBefore = 1; // 1 day before\n      }\n    }\n    \n    if (daysToAdd > 0) {\n        const warrantyEnd = new Date(pDate);\n        warrantyEnd.setDate(warrantyEnd.getDate() + daysToAdd);\n        \n        const diffTime = warrantyEnd - today;\n        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));\n        \n        // Trigger if exactly 'triggerDaysBefore' left.\n        if (diffDays === triggerDaysBefore) {\n          eventsFound.push('warranty_reminder');\n        }\n    }\n  }\n  \n  // 4. Emit one item per found event\n  for (const event of eventsFound) {\n      // Clone item to avoid reference issues if multiple events trigger\n      const newItem = {\n          json: { ...item.json, EventTrigger: event },\n          pairedItem: { item: item.pairedItem }\n      };\n      results.push(newItem);\n  }\n}\n\nreturn results;"
+            },
+            "id": "78b3283b-f5df-4edc-ae55-4f98dda4ea09",
+            "name": "Detect Events",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2464,
+                3504
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Normalization and Deduplication Logic\nconst items = $input.all();\nconst uniqueMap = new Map();\n\n// Priority Helper: Wholesale > Retail > Offer\nconst getPriority = (type) => {\n  const t = (type || '').toLowerCase();\n  if (t === 'wholesale') return 3;\n  if (t === 'retail') return 2;\n  if (t === 'offer') return 1;\n  return 0;\n};\n\n// Regex for strict email validation\nconst emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$/;\n\nfor (const item of items) {\n  const json = item.json;\n  \n  // Normalize Core Fields\n  const email = (json['Email Address'] || '').trim();\n  const mobile = (json['Mobile Number'] || '').toString().trim();\n  const type = (json['Customer Type'] || '').trim().toLowerCase();\n  \n  // Strict Validation: Must have a valid email\n  if (!email || !emailRegex.test(email)) {\n    continue; // Skip invalid or missing emails\n  }\n  \n  // Identifier: Email only\n  const key = email.toLowerCase();\n  \n  // Update item with normalized values for downstream use\n  item.json['NormalizedType'] = type;\n  item.json['NormalizedEmail'] = email;\n  \n  const priority = getPriority(type);\n  \n  if (uniqueMap.has(key)) {\n    const existing = uniqueMap.get(key);\n    const existingPriority = getPriority(existing.json['Customer Type']);\n    \n    // If current record has higher priority (or equal but later in sheet=newer), overwrite\n    if (priority >= existingPriority) {\n      uniqueMap.set(key, item);\n    }\n  } else {\n    uniqueMap.set(key, item);\n  }\n}\n\nreturn Array.from(uniqueMap.values());"
+            },
+            "id": "59d5e3bc-33dc-45a8-8ad1-828941b9bece",
+            "name": "Normalize & Deduplicate",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2256,
+                3504
+            ]
+        },
+        {
+            "parameters": {
+                "documentId": {
+                    "__rl": true,
+                    "value": "1WhJkMWpiKjl1cHPDVk9yaBMt4QLUXm389N6qINvtEUU",
+                    "mode": "list",
+                    "cachedResultName": "Bibek_important",
+                    "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1WhJkMWpiKjl1cHPDVk9yaBMt4QLUXm389N6qINvtEUU/edit?usp=drivesdk"
+                },
+                "sheetName": {
+                    "__rl": true,
+                    "value": 2070994065,
+                    "mode": "list",
+                    "cachedResultName": "google_sheets_template",
+                    "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1WhJkMWpiKjl1cHPDVk9yaBMt4QLUXm389N6qINvtEUU/edit#gid=2070994065"
+                },
+                "options": {}
+            },
+            "id": "8acaa150-7cd1-4c93-ac4e-40bdf52b0d30",
+            "name": "Fetch Customer Data",
+            "type": "n8n-nodes-base.googleSheets",
+            "typeVersion": 3,
+            "position": [
+                2064,
+                3504
+            ],
+            "credentials": {
+                "googleSheetsOAuth2Api": {
+                    "id": "06cXdIEpdux7GMD2",
+                    "name": "Google Sheets account 4"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours"
+                        }
+                    ]
+                }
+            },
+            "id": "1b12c10e-6a20-4b8d-a061-b81484392865",
+            "name": "Daily Schedule",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                1856,
+                3504
+            ]
+        }
+    ],
+    "connections": {
+        "Calc Admin Stats": {
+            "main": [
+                [
+                    {
+                        "node": "Email: Admin Report",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Birthday Segment": {
+            "main": [
+                [
+                    {
+                        "node": "Email: Bday Wholesale",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Email: Bday Retail",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Email: Bday Offer",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Route Events": {
+            "main": [
+                [
+                    {
+                        "node": "Birthday Segment",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Email: Purchase TY",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Email: Warranty",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Detect Events": {
+            "main": [
+                [
+                    {
+                        "node": "Calc Admin Stats",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Route Events",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Normalize & Deduplicate": {
+            "main": [
+                [
+                    {
+                        "node": "Detect Events",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Fetch Customer Data": {
+            "main": [
+                [
+                    {
+                        "node": "Normalize & Deduplicate",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Daily Schedule": {
+            "main": [
+                [
+                    {
+                        "node": "Fetch Customer Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "dfa89495ac234c028120df695f63ce9b3bc6862370949cddf79cea4d4081954a"
+    }
+}

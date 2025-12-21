@@ -263,6 +263,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const interests = Array.from(formData.getAll('interests')).join(', ');
         formData.set('interests', interests);
 
+        // Combine Warranty logic
+        const wValEl = document.getElementById('warrantyValue');
+        const wUnitEl = document.getElementById('warrantyUnit');
+
+        if (wValEl && wUnitEl) {
+            const wVal = wValEl.value;
+            const wUnit = wUnitEl.value;
+            if (wVal && wUnit) {
+                formData.set('warrantyPeriod', `${wVal} ${wUnit}`);
+            }
+        }
+
         // Send Request (Background) //
         // Even if it fails, we showed success. 
         // We will only alert if it fails.
