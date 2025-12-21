@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | LuxeMobile</title>
+    <meta name="description"
+        content="LuxeMobile Portal - Register purchases, join our wholesale network, or claim exclusive offers.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            --bg-body: #0f1115;
+            --bg-card: #181a20;
+            --primary: #d4af37;
+            --primary-hover: #e5bd3d;
+            --text-main: #ffffff;
+            --text-muted: #848e9c;
+            --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.4);
+            --radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .portal-wrapper {
+            width: 100%;
+            max-width: 900px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .logo-accent {
+            color: var(--primary);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .portal-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 32px;
+            color: var(--primary);
+            transition: 0.3s;
+        }
+
+        .portal-card:hover .icon-box {
+            background: var(--primary);
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            max-width: 300px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="portal-wrapper">
+        <header class="header">
+            <div class="logo-text">LUXE<span class="logo-accent">MOBILE</span></div>
+            <p class="subtitle">Select your destination</p>
+        </header>
+
+        <div class="cards-grid">
+            <!-- Registration Link -->
+            <a href="registration.html" class="portal-card">
+                <div class="icon-box">
+                    <i class="ph ph-shield-check"></i>
+                </div>
+                <h2 class="card-title">Registration</h2>
+                <p class="card-desc">Register a new product purchase for warranty or join our wholesale partner network.
+                </p>
+            </a>
+
+            <!-- Offers Link -->
+            <a href="form-offers.html" class="portal-card">
+                <div class="icon-box">
+                    <i class="ph ph-gift"></i>
+                </div>
+                <h2 class="card-title">Claim Offers</h2>
+                <p class="card-desc">Exclusive deals, giveaways, and limited-time promotions for our valued customers.
+                </p>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
